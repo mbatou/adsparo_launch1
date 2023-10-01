@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include the Tailwind CSS CDN link -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Define a keyframe animation for the bird */
+        @keyframes fly {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes myAnim {
+            0% {
+                animation-timing-function: ease-in;
+                opacity: 0;
+                transform: translateY(250px);
+            }
+
+            38% {
+                animation-timing-function: ease-out;
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            55% {
+                animation-timing-function: ease-in;
+                transform: translateY(65px);
+            }
+
+            72% {
+                animation-timing-function: ease-out;
+                transform: translateY(0);
+            }
+
+            81% {
+                animation-timing-function: ease-in;
+                transform: translateY(28px);
+            }
+
+            90% {
+                animation-timing-function: ease-out;
+                transform: translateY(0);
+            }
+
+            95% {
+                animation-timing-function: ease-in;
+                transform: translateY(8px);
+            }
+
+            100% {
+                animation-timing-function: ease-out;
+                transform: translateY(0);
+            }
+        }
+
+        /* Style the container for the buttons */
+        .buttons-container {
+            margin-top: 10px;
+            /* Adjust the margin as needed to position the buttons */
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+
+
+            /* To evenly distribute buttons */
+        }
+
+        .buttons-container button {
+            background-color: #fc809b;
+            color: white;
+            font-weight: 400;
+            padding: 15px;
+            border: transparent;
+            border-radius: 10px;
+            animation: myAnim 2s ease 0s 1 normal forwards;
+        }
+
+        /* Style the bird element */
+        .bird {
+            width: 50px;
+            height: 50px;
+            background-color: #FF5733;
+            /* You can choose the bird's color */
+            border-radius: 50%;
+            position: absolute;
+            animation: fly 10s linear infinite;
+            /* Adjust animation duration and timing as needed */
+        }
+
+        /* Position the bird element within the "Nest" card */
+        .nest {
+            position: relative;
+        }
+
+        /* Style the chat container */
+        .chat-container {
+            word-wrap: break-word;
+            /* Allow text to wrap and break */
+        }
+
+        /* Style the chat bubbles */
+        .chat-bubble {
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            word-wrap: break-word;
+            /* Allow text to wrap and break */
+        }
+
+        .chat-bubble-left {
+            left: 0;
+            margin-right: 20px;
+            background-color: #ffff;
+            word-wrap: break-word;
+            text-align: left;
+            /* Allow text to wrap and break */
+        }
+
+        .chat-bubble-right {
+            margin-left: 20px;
+            background-color: #fc809b;
+            /* User's chat bubble color */
+            color: white;
+            word-wrap: break-word;
+            /* Allow text to wrap and break */
+            text-align: right;
+            word-wrap: break-word;
+            /* flex-wrap: wrap; */
+        }
+
+        /* Style the input field and submit button */
+        .input-field {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            /* Move background color to the input field */
+            padding: 10px;
+            /* Adjust padding for the input field */
+            margin-top: 50px;
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 8px;
+        }
+
+        #submit-button {
+            background-color: #0099FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        /* Style the white card */
+        .white-card {
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        /* CSS animation for typing effect */
+        /* @keyframes typing {
+            0% {
+                width: 0;
+                opacity: 1;
+            }
+
+            100% {
+                width: 100%;
+                opacity: 1;
+            }
+        } */
+
+        .typing-animation {
+            /* animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; */
+            /* animation: typing 4s steps(40, end) forwards; */
+            /* white-space: nowrap; */
+            /* overflow: hidden; */
+            /* word-wrap: break-word; */
+            /* Allow text to wrap and break */
+            overflow: hidden;
+            /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid orange;
+            /* The typwriter cursor */
+            white-space: nowrap;
+            /* Keeps the content on a single line */
+            margin: 0 auto;
+            /* Gives that scrolling effect as the typing happens */
+            /* Adjust as needed */
+            animation:
+                typing 3.5s steps(40, end),
+                blink-caret .75s;
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: orange;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <header class="text-center my-8">
+        <h1 class="text-2xl font-semibold headline-form">Welcome to Adsparo</h1>
+        <p class="text-gray-600 description-form">Your Adsparo Experience of the Day 😃</p>
+    </header>
+
+    <div class="white-card bg-white p-8 rounded-lg shadow-md nest relative bg-opacity-50">
+        <!-- Chat container for messages -->
+        <div class="chat-container">
+            <div class="chat-bubble chat-bubble-left">
+                <p>Welcome, my name is <strong>Nest</strong> ✌️, and I'll be your big experience today. <strong>What's
+                        your name</strong>?
+                </p>
+            </div>
+        </div>
+
+        <!-- Input field -->
+        <div class="input-field border rounded-lg">
+            <input type="text" id="user-input" class="border rounded" placeholder="Enter your name">
+            <button id="submit-button">Send</button>
+        </div>
+    </div>
+    <!-- <audio id="background-music" autoplay loop>
+        <source src="videoplayback-_1_.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio> -->
+    
+    <script>
+
+        // DOM Elements
+        const userInput = document.getElementById("user-input");
+        const submitButton = document.getElementById("submit-button");
+        const chatContainer = document.querySelector(".chat-container");
+    
+        // User Input States
+        let isNameProvided = false;
+        let isEmailProvided = false;
+        let isHintProvided = false;
+        let isSecondProvided = false;
+    
+        // Event Listener for Button Clicks
+        submitButton.addEventListener("click", () => {
+            const userMessage = userInput.value.trim();
+    
+            if (!isNameProvided) {
+                if (userMessage !== "") {
+                    // User provided their name
+                    const userChatBubble = document.createElement("div");
+                    userChatBubble.className = "chat-bubble chat-bubble-right";
+                    userChatBubble.innerHTML = `<p>${userMessage}</p>`;
+                    chatContainer.appendChild(userChatBubble);
+    
+                    userInput.value = "";
+                    userInput.placeholder = "Enter your email";
+                    submitButton.textContent = "Submit";
+    
+                    isNameProvided = true;
+    
+                    const nestGreeting = document.createElement("div");
+                    nestGreeting.className = "chat-bubble chat-bubble-left";
+                    nestGreeting.innerHTML = `<p class="typing-animation">Nice to meet you, ${userMessage}! Now, please provide your email address.</p>`;
+                    chatContainer.appendChild(nestGreeting);
+                }
+            } else if (!isEmailProvided) {
+                if (userMessage !== "") {
+                    if (isValidEmail(userMessage)) {
+                        // Email is valid, add it to the chat container
+                        const userChatBubble = document.createElement("div");
+                        userChatBubble.className = "chat-bubble chat-bubble-right";
+                        userChatBubble.innerHTML = `<p>${userMessage}</p>`;
+                        chatContainer.appendChild(userChatBubble);
+    
+                        userInput.value = "";
+                        // saveEmailToFirestore(userMessage);
+                        userInput.placeholder = "Enter your answer";
+                        submitButton.textContent = "Send";
+    
+                        const nestResponse = document.createElement("div");
+                        nestResponse.className = "chat-bubble chat-bubble-left";
+                        nestResponse.innerHTML = `<p class="typing-animation">Thank you for providing your email address! I know why you're here, Curious!.</p>`;
+                        chatContainer.appendChild(nestResponse);
+    
+                        setTimeout(() => {
+                            const nestIntro = document.createElement("div");
+                            nestIntro.className = "chat-bubble chat-bubble-left";
+                            nestIntro.innerHTML = `<p class="typing-animation">We have a big announcement 🎉 in <strong><span id="countdown"></span></strong>. What do you think it is?</p>`;
+                            chatContainer.appendChild(nestIntro);
+    
+                            const targetDate = new Date("2023-10-05 12:00:00").getTime();
+                            const countdown = document.getElementById("countdown");
+                            const countdownInterval = setInterval(function () {
+                                const now = new Date().getTime();
+                                const timeLeft = targetDate - now;
+    
+                                if (timeLeft <= 0) {
+                                    clearInterval(countdownInterval);
+                                    countdown.innerText = "Countdown expired!";
+                                } else {
+                                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    
+                                    countdown.innerHTML = `
+                                        ${days}d ${hours}h ${minutes}m ${seconds}s
+                                    `;
+                                }
+                            }, 1000);
+                        }, 5000);
+    
+                        setTimeout(() => {
+                            const nestAbout = document.createElement("div");
+                            nestAbout.className = "chat-bubble chat-bubble-left";
+                            nestAbout.innerHTML = `<p class="typing-animation"><strong>Hint</strong>: It will be full of Fun and Creativity 🤭</p>`;
+                            chatContainer.appendChild(nestAbout);
+                        }, 10000);
+    
+                        isEmailProvided = true;
+                    } else {
+                        const errorMessageBubble = document.createElement("div");
+                        errorMessageBubble.className = "chat-bubble chat-bubble-left";
+                        errorMessageBubble.innerHTML = `<p class="typing-animation">Please provide a valid email address.</p>`;
+                        chatContainer.appendChild(errorMessageBubble);
+                    }
+                }
+            } else if (!isHintProvided) {
+                if (userMessage !== "") {
+                    const userChatBubble = document.createElement("div");
+                    userChatBubble.className = "chat-bubble chat-bubble-right";
+                    userChatBubble.innerHTML = `<p>${userMessage}</p>`;
+                    chatContainer.appendChild(userChatBubble);
+    
+                    userInput.value = "";
+                    userInput.placeholder = "Enter your answer";
+                    submitButton.textContent = "Send";
+    
+                    const nestResponse = document.createElement("div");
+                    nestResponse.className = "chat-bubble chat-bubble-left";
+                    nestResponse.innerHTML = `<p class="typing-animation">Nice try! 🤯 I didn't think of that. Let me give you a second chance 🥹.</p>`;
+                    chatContainer.appendChild(nestResponse);
+    
+                    isHintProvided = true;
+                }
+            } else if (!isSecondProvided) {
+                if (userMessage !== "") {
+                    const userChatBubble = document.createElement("div");
+                    userChatBubble.className = "chat-bubble chat-bubble-right";
+                    userChatBubble.innerHTML = `<p>${userMessage}</p>`;
+                    chatContainer.appendChild(userChatBubble);
+    
+                    userInput.value = "";
+                    userInput.placeholder = "Enter your answer";
+                    submitButton.textContent = "Send";
+    
+                    const nestResponse = document.createElement("div");
+                    nestResponse.className = "chat-bubble chat-bubble-left";
+                    nestResponse.innerHTML = `<p class="typing-animation">Oh sorry, my dear 🥹, but I'll keep in touch with you by email 🤭. Thank you for visiting me, my new friend. Bye! ✌️</p>`;
+                    chatContainer.appendChild(nestResponse);
+    
+                    setTimeout(() => {
+                        const nestOutro = document.createElement("div");
+                        nestOutro.className = "chat-bubble chat-bubble-left";
+                        nestOutro.innerHTML = `<p class="typing-animation">Oh yes! Enjoy the music 🎼 🤭</p>`;
+                        chatContainer.appendChild(nestOutro);
+                    }, 5000);
+    
+                    isSecondProvided = true;
+                }
+            }
+        });
+    
+        // Function to validate an email address
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    
+        
+    </script>
+    
+
+
+
+
+</body>
+
+</html>
