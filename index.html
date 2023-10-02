@@ -136,6 +136,7 @@
             text-align: right;
             word-wrap: break-word;
             /* flex-wrap: wrap; */
+            white-space: wrap;
         }
 
         /* Style the input field and submit button */
@@ -188,15 +189,14 @@
         .typing-animation {
             /* animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; */
             /* animation: typing 4s steps(40, end) forwards; */
-            /* white-space: nowrap; */
             /* overflow: hidden; */
-            /* word-wrap: break-word; */
+            word-wrap: break-word;
             /* Allow text to wrap and break */
-            overflow: hidden;
+            /* overflow: hidden; */
             /* Ensures the content is not revealed until the animation */
-            border-right: .15em solid orange;
+            border-right: .05em solid black;
             /* The typwriter cursor */
-            white-space: nowrap;
+            white-space: wrap;
             /* Keeps the content on a single line */
             margin: 0 auto;
             /* Gives that scrolling effect as the typing happens */
@@ -226,7 +226,7 @@
             }
 
             50% {
-                border-color: orange;
+                border-color: black;
             }
         }
     </style>
@@ -258,24 +258,24 @@
         <source src="videoplayback-_1_.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio> -->
-    
+
     <script>
 
         // DOM Elements
         const userInput = document.getElementById("user-input");
         const submitButton = document.getElementById("submit-button");
         const chatContainer = document.querySelector(".chat-container");
-    
+
         // User Input States
         let isNameProvided = false;
         let isEmailProvided = false;
         let isHintProvided = false;
         let isSecondProvided = false;
-    
+
         // Event Listener for Button Clicks
         submitButton.addEventListener("click", () => {
             const userMessage = userInput.value.trim();
-    
+
             if (!isNameProvided) {
                 if (userMessage !== "") {
                     // User provided their name
@@ -283,13 +283,13 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your email";
                     submitButton.textContent = "Submit";
-    
+
                     isNameProvided = true;
-    
+
                     const nestGreeting = document.createElement("div");
                     nestGreeting.className = "chat-bubble chat-bubble-left";
                     nestGreeting.innerHTML = `<p class="typing-animation">Nice to meet you, ${userMessage}! Now, please provide your email address.</p>`;
@@ -303,29 +303,29 @@
                         userChatBubble.className = "chat-bubble chat-bubble-right";
                         userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                         chatContainer.appendChild(userChatBubble);
-    
+
                         userInput.value = "";
                         // saveEmailToFirestore(userMessage);
                         userInput.placeholder = "Enter your answer";
                         submitButton.textContent = "Send";
-    
+
                         const nestResponse = document.createElement("div");
                         nestResponse.className = "chat-bubble chat-bubble-left";
                         nestResponse.innerHTML = `<p class="typing-animation">Thank you for providing your email address! I know why you're here, Curious!.</p>`;
                         chatContainer.appendChild(nestResponse);
-    
+
                         setTimeout(() => {
                             const nestIntro = document.createElement("div");
                             nestIntro.className = "chat-bubble chat-bubble-left";
                             nestIntro.innerHTML = `<p class="typing-animation">We have a big announcement 🎉 in <strong><span id="countdown"></span></strong>. What do you think it is?</p>`;
                             chatContainer.appendChild(nestIntro);
-    
+
                             const targetDate = new Date("2023-10-05 12:00:00").getTime();
                             const countdown = document.getElementById("countdown");
                             const countdownInterval = setInterval(function () {
                                 const now = new Date().getTime();
                                 const timeLeft = targetDate - now;
-    
+
                                 if (timeLeft <= 0) {
                                     clearInterval(countdownInterval);
                                     countdown.innerText = "Countdown expired!";
@@ -334,21 +334,21 @@
                                     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                                     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                                     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-    
+
                                     countdown.innerHTML = `
                                         ${days}d ${hours}h ${minutes}m ${seconds}s
                                     `;
                                 }
                             }, 1000);
                         }, 5000);
-    
+
                         setTimeout(() => {
                             const nestAbout = document.createElement("div");
                             nestAbout.className = "chat-bubble chat-bubble-left";
                             nestAbout.innerHTML = `<p class="typing-animation"><strong>Hint</strong>: It will be full of Fun and Creativity 🤭</p>`;
                             chatContainer.appendChild(nestAbout);
                         }, 10000);
-    
+
                         isEmailProvided = true;
                     } else {
                         const errorMessageBubble = document.createElement("div");
@@ -363,16 +363,16 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your answer";
                     submitButton.textContent = "Send";
-    
+
                     const nestResponse = document.createElement("div");
                     nestResponse.className = "chat-bubble chat-bubble-left";
                     nestResponse.innerHTML = `<p class="typing-animation">Nice try! 🤯 I didn't think of that. Let me give you a second chance 🥹.</p>`;
                     chatContainer.appendChild(nestResponse);
-    
+
                     isHintProvided = true;
                 }
             } else if (!isSecondProvided) {
@@ -381,37 +381,37 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your answer";
                     submitButton.textContent = "Send";
-    
+
                     const nestResponse = document.createElement("div");
                     nestResponse.className = "chat-bubble chat-bubble-left";
                     nestResponse.innerHTML = `<p class="typing-animation">Oh sorry, my dear 🥹, but I'll keep in touch with you by email 🤭. Thank you for visiting me, my new friend. Bye! ✌️</p>`;
                     chatContainer.appendChild(nestResponse);
-    
+
                     setTimeout(() => {
                         const nestOutro = document.createElement("div");
                         nestOutro.className = "chat-bubble chat-bubble-left";
                         nestOutro.innerHTML = `<p class="typing-animation">Oh yes! Enjoy the music 🎼 🤭</p>`;
                         chatContainer.appendChild(nestOutro);
                     }, 5000);
-    
+
                     isSecondProvided = true;
                 }
             }
         });
-    
+
         // Function to validate an email address
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
-    
-        
+
+
     </script>
-    
+
 
 
 

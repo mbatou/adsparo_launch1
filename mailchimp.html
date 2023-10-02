@@ -1,0 +1,132 @@
+<title>Document</title>
+    <style>
+        /* Add a container to hold the cards and use flexbox */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping to create three columns */
+            justify-content: space-between; /* Distribute space between columns */
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 30%; /* Adjust the width to create three columns */
+            margin-bottom: 20px; /* Add some spacing between cards */
+            perspective: 1000px;
+            font-family: sans-serif;
+            height: 300px; /* Set a fixed height for the cards */
+            position: relative;
+        }
+
+        .title {
+            font-size: 1.5em;
+            font-weight: 900;
+            text-align: center;
+            margin: 0;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            overflow: hidden; /* Hide image overflow */
+        }
+
+        .flip-card-front {
+            background: linear-gradient(120deg, bisque 60%, rgb(255, 231, 222) 88%, rgb(255, 211, 195) 40%, rgba(255, 127, 80, 0.603) 48%);
+            color: #fe4576;
+        }
+
+        .flip-card-back {
+            background: #101a68;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Use object-fit to make images fit the container */
+        .flip-card-front img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Position the text on top of the images */
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+    </style>
+
+
+
+    <div class="card-container">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="https://drive.google.com/uc?export=view&amp;id=1VP8qefqweYnz-0SkMiHV1GXbxzs6PNZs" alt="Image Description">
+                    <div class="text-overlay">
+                        <p class="title" style="margin-top: 200px;">CEO</p>
+                        <p>Kofi Odame-Kani Brako</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <p class="title" style="font-size: 20px;">Chief Executive Officer</p>
+                    <p style="margin-top: 30px;">Kofi maintains a birds eye view of our mission, and keeps the team inspired to make our clients dreams a reality.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="https://drive.google.com/uc?export=view&amp;id=1jgVdUGOGb_vv0YJQz9ODNRU2L9RxdNeX" alt="Image Description">
+                    <div class="text-overlay">
+                        <p class="title" style="margin-top: 200px;">CTO</p>
+                        <p>Abena K Gyamfi-Afrifa</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <p class="title" style="font-size: 20px;">Chief Technical Officer</p>
+                    <p style="margin-top: 30px;">With a keen eye for tech solutions, Abena ensures we are always at the forefront of innovation.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="https://drive.google.com/uc?export=view&amp;id=1xa-Jbo8sYRCIZdnd_7yG1MjMVmlKGisA" alt="Image Description">
+                    <div class="text-overlay">
+                        <p class="title" style="margin-top: 200px;">CMO</p>
+                        <p>Georges M C S DIEME</p>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <p class="title" style="font-size: 20px;">Chief Marketing Officer</p>
+                    <p style="margin-top: 30px;">With a passion for storytellng, Georges orchestrates campaigns that always resonate with your audience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
