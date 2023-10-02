@@ -2,11 +2,11 @@
 <html lang="en-GB">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Include the Tailwind CSS CDN link -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
     <style>
         /* Define a keyframe animation for the bird */
         @keyframes fly {
@@ -71,7 +71,6 @@
             justify-content: center;
             gap: 100px;
 
-
             /* To evenly distribute buttons */
         }
 
@@ -89,7 +88,7 @@
         .bird {
             width: 50px;
             height: 50px;
-            background-color: #FF5733;
+            background-color: #ff5733;
             /* You can choose the bird's color */
             border-radius: 50%;
             position: absolute;
@@ -136,6 +135,7 @@
             text-align: right;
             word-wrap: break-word;
             /* flex-wrap: wrap; */
+            white-space: wrap;
         }
 
         /* Style the input field and submit button */
@@ -158,7 +158,7 @@
         }
 
         #submit-button {
-            background-color: #0099FF;
+            background-color: #0099ff;
             color: white;
             border: none;
             border-radius: 5px;
@@ -186,47 +186,25 @@
         } */
 
         .typing-animation {
-            /* animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; */
-            /* animation: typing 4s steps(40, end) forwards; */
-            /* white-space: nowrap; */
-            /* overflow: hidden; */
-            /* word-wrap: break-word; */
-            /* Allow text to wrap and break */
-            overflow: hidden;
-            /* Ensures the content is not revealed until the animation */
-            border-right: .15em solid orange;
-            /* The typwriter cursor */
-            white-space: nowrap;
-            /* Keeps the content on a single line */
+            white-space: wrap;
+            /* Keep the content on a single line */
             margin: 0 auto;
-            /* Gives that scrolling effect as the typing happens */
-            /* Adjust as needed */
-            animation:
-                typing 3.5s steps(40, end),
-                blink-caret .75s;
+            /* Center the text horizontally */
+            display: inline-block;
+            /* Display as inline block to not affect the bubble height */
+            animation: typing 3.5s steps(40, end);
+            overflow: hidden;
+            /* Hide any overflowed content */
         }
 
         /* The typing effect */
         @keyframes typing {
             from {
-                width: 0
+                width: 0;
             }
 
             to {
-                width: 100%
-            }
-        }
-
-        /* The typewriter cursor effect */
-        @keyframes blink-caret {
-
-            from,
-            to {
-                border-color: transparent
-            }
-
-            50% {
-                border-color: orange;
+                width: 100%;
             }
         }
     </style>
@@ -235,47 +213,65 @@
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
     <header class="text-center my-8">
         <h1 class="text-2xl font-semibold headline-form">Welcome to Adsparo</h1>
-        <p class="text-gray-600 description-form">Your Adsparo Experience of the Day 😃</p>
+        <p class="text-gray-600 description-form">
+            Your Adsparo Experience of the Day 😃
+        </p>
     </header>
 
     <div class="white-card bg-white p-8 rounded-lg shadow-md nest relative bg-opacity-50">
         <!-- Chat container for messages -->
         <div class="chat-container">
             <div class="chat-bubble chat-bubble-left">
-                <p>Welcome, my name is <strong>Nest</strong> ✌️, and I'll be your big experience today. <strong>What's
-                        your name</strong>?
+                <p>
+                    Welcome, my name is <strong>Nest</strong> ✌️, and I'll be your big
+                    experience today. <strong>What's your name</strong>?
                 </p>
             </div>
         </div>
 
         <!-- Input field -->
         <div class="input-field border rounded-lg">
-            <input type="text" id="user-input" class="border rounded" placeholder="Enter your name">
+            <input type="text" id="user-input" class="border rounded" placeholder="Enter your name" />
             <button id="submit-button">Send</button>
         </div>
     </div>
-    <!-- <audio id="background-music" autoplay loop>
+    <audio id="background-music" autoplay loop>
         <source src="videoplayback-_1_.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
-    </audio> -->
-    
-    <script>
+    </audio>
+    <!-- Include Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-firestore.js"></script>
+    <!-- Add more Firebase services as needed -->
 
+    <script>
         // DOM Elements
         const userInput = document.getElementById("user-input");
         const submitButton = document.getElementById("submit-button");
         const chatContainer = document.querySelector(".chat-container");
-    
+        // Initialize Firebase with your Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlq4ji3ZEpmg66ZzGpxUfo1yi3YgraqFU",
+            authDomain: "adsparo-game.firebaseapp.com",
+            projectId: "adsparo-game",
+            storageBucket: "adsparo-game.appspot.com",
+            messagingSenderId: "920736398837",
+            appId: "1:920736398837:web:ffae08c670be89ff5574bc",
+            measurementId: "G-LDQW499Q8H"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
         // User Input States
         let isNameProvided = false;
         let isEmailProvided = false;
         let isHintProvided = false;
         let isSecondProvided = false;
-    
+
         // Event Listener for Button Clicks
         submitButton.addEventListener("click", () => {
             const userMessage = userInput.value.trim();
-    
+
             if (!isNameProvided) {
                 if (userMessage !== "") {
                     // User provided their name
@@ -283,13 +279,13 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your email";
                     submitButton.textContent = "Submit";
-    
+
                     isNameProvided = true;
-    
+
                     const nestGreeting = document.createElement("div");
                     nestGreeting.className = "chat-bubble chat-bubble-left";
                     nestGreeting.innerHTML = `<p class="typing-animation">Nice to meet you, ${userMessage}! Now, please provide your email address.</p>`;
@@ -303,52 +299,56 @@
                         userChatBubble.className = "chat-bubble chat-bubble-right";
                         userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                         chatContainer.appendChild(userChatBubble);
-    
+
                         userInput.value = "";
-                        // saveEmailToFirestore(userMessage);
+                        saveEmailToFirestore(userMessage);
                         userInput.placeholder = "Enter your answer";
                         submitButton.textContent = "Send";
-    
+
                         const nestResponse = document.createElement("div");
                         nestResponse.className = "chat-bubble chat-bubble-left";
                         nestResponse.innerHTML = `<p class="typing-animation">Thank you for providing your email address! I know why you're here, Curious!.</p>`;
                         chatContainer.appendChild(nestResponse);
-    
+
                         setTimeout(() => {
                             const nestIntro = document.createElement("div");
                             nestIntro.className = "chat-bubble chat-bubble-left";
                             nestIntro.innerHTML = `<p class="typing-animation">We have a big announcement 🎉 in <strong><span id="countdown"></span></strong>. What do you think it is?</p>`;
                             chatContainer.appendChild(nestIntro);
-    
+
                             const targetDate = new Date("2023-10-05 12:00:00").getTime();
                             const countdown = document.getElementById("countdown");
                             const countdownInterval = setInterval(function () {
                                 const now = new Date().getTime();
                                 const timeLeft = targetDate - now;
-    
+
                                 if (timeLeft <= 0) {
                                     clearInterval(countdownInterval);
                                     countdown.innerText = "Countdown expired!";
                                 } else {
                                     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                                    const hours = Math.floor(
+                                        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                                    );
+                                    const minutes = Math.floor(
+                                        (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+                                    );
                                     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-    
+
                                     countdown.innerHTML = `
                                         ${days}d ${hours}h ${minutes}m ${seconds}s
                                     `;
                                 }
                             }, 1000);
                         }, 5000);
-    
+
                         setTimeout(() => {
                             const nestAbout = document.createElement("div");
                             nestAbout.className = "chat-bubble chat-bubble-left";
                             nestAbout.innerHTML = `<p class="typing-animation"><strong>Hint</strong>: It will be full of Fun and Creativity 🤭</p>`;
                             chatContainer.appendChild(nestAbout);
                         }, 10000);
-    
+
                         isEmailProvided = true;
                     } else {
                         const errorMessageBubble = document.createElement("div");
@@ -363,16 +363,16 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your answer";
                     submitButton.textContent = "Send";
-    
+
                     const nestResponse = document.createElement("div");
                     nestResponse.className = "chat-bubble chat-bubble-left";
                     nestResponse.innerHTML = `<p class="typing-animation">Nice try! 🤯 I didn't think of that. Let me give you a second chance 🥹.</p>`;
                     chatContainer.appendChild(nestResponse);
-    
+
                     isHintProvided = true;
                 }
             } else if (!isSecondProvided) {
@@ -381,41 +381,52 @@
                     userChatBubble.className = "chat-bubble chat-bubble-right";
                     userChatBubble.innerHTML = `<p>${userMessage}</p>`;
                     chatContainer.appendChild(userChatBubble);
-    
+
                     userInput.value = "";
                     userInput.placeholder = "Enter your answer";
                     submitButton.textContent = "Send";
-    
+
                     const nestResponse = document.createElement("div");
                     nestResponse.className = "chat-bubble chat-bubble-left";
                     nestResponse.innerHTML = `<p class="typing-animation">Oh sorry, my dear 🥹, but I'll keep in touch with you by email 🤭. Thank you for visiting me, my new friend. Bye! ✌️</p>`;
                     chatContainer.appendChild(nestResponse);
-    
+
                     setTimeout(() => {
                         const nestOutro = document.createElement("div");
                         nestOutro.className = "chat-bubble chat-bubble-left";
                         nestOutro.innerHTML = `<p class="typing-animation">Oh yes! Enjoy the music 🎼 🤭</p>`;
                         chatContainer.appendChild(nestOutro);
                     }, 5000);
-    
+
                     isSecondProvided = true;
                 }
             }
         });
-    
+
         // Function to validate an email address
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
         }
-    
-        
+
+        function saveEmailToFirestore(email) {
+            const db = firebase.firestore();
+
+            // Add the email to the "registrations" collection
+            db.collection("registrations")
+                .add({
+                    email: email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                })
+                .then((docRef) => {
+                    console.log("Email saved with ID: ", docRef.id);
+                })
+                .catch((error) => {
+                    console.error("Error adding email: ", error);
+                });
+        }
+
     </script>
-    
-
-
-
-
 </body>
 
 </html>
